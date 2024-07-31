@@ -228,7 +228,7 @@ class Sales:
         print(my_sales)
         return my_sales
     
-    @classmethod
+    @classmethod #Class method to access a sale by id for salesman changes
     def get_one_by_id(cls, id):
         res = cursor.execute(f'''
         SELECT * FROM sales
