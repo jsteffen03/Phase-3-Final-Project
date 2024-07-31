@@ -67,8 +67,28 @@ class Clients:
                 budget = client[3]
             )
             all_clients.append(cl)
-        print(all_clients)
         return all_clients
+    
+    @classmethod
+    def get_by_name(cls, name):
+        res = cursor.execute(
+            "SELECT * FROM clients WHERE name = ?"
+            , (name, ))
+        data = res.fetchone()
+        if data:
+            return Clients(
+                id=data[0], 
+                name=data[1], 
+                phone=data[2], 
+                budget=data[3]
+            )
+        return None
+    
+    @classmethod
+    def create_client(cls, name, phone, budget):
+        new_client = Clients(name=name, phone=phone, budget=budget)
+        new_client.save_client()
+        return new_client
 
     def __repr__(self):
         return (
@@ -87,21 +107,16 @@ class Salesman:
         return Sales.get_sales_by_salesman(self.id)
 
     @classmethod
-    def get_all(cls):
-        res = cursor.execute("SELECT * FROM salesmen")
-        data = res.fetchall()
-        all_salesmen =[]
-        for salesmen in data:
-            cl = Salesman(
-                id = salesmen[0],
-                name = salesmen[1],
-                phone = salesmen[2],
-                budget = salesmen[3]
+    def get_by_id(cls, id):
+        res = cursor.execute("SELECT * FROM salesman WHERE id = ?", (id, ))
+        data = res.fetchone()
+        if data:
+            return Salesman(
+                id = data[0],
+                name = data[1],
+                company_name = data[2],
             )
-            all_salesmen.append(cl)
-        print(all_salesmen)
-        return all_salesmen
-
+        return None
 class Sales:
 
     def __init__(self, sales_id, client_id, price, next_appointment, last_contact, progress, id=None):
@@ -152,7 +167,7 @@ class Sales:
         return self._next_appointment 
     
     def set_next_appointment(self, value):
-        if type(value) is str and len(value) == 10 and "-" in value:
+        if type(value) is str and len(value) == 10 and "-" in value or value == None:
             self._next_appointment = value
         else:
             raise ValueError("Please enter date in format YYYY-MM-DD")
@@ -163,7 +178,7 @@ class Sales:
         return self._last_contact 
     
     def set_last_contact(self, value):
-        if type(value) is str and len(value) == 10 and "-" in value:
+        if type(value) is str and len(value) == 10 and "-" in value or value == None:
             self._last_contact = value
         else:
             raise ValueError("Please enter date in format YYYY-MM-DD")
@@ -174,7 +189,7 @@ class Sales:
         return self._progress
     
     def set_progress(self, value):
-        if type(value) is str and (value == "In Progress" or value == "Sold!" or value == "Lost"):
+        if type(value) is str and (value == "In Progress" or value == "Sold!" or value == "Lost") or value == None:
             self._progress = value
         else:
             raise ValueError('''Please enter one of the following: "Sold!", "In Progress", "Lost";''')
@@ -206,7 +221,6 @@ class Sales:
                 progress = sale[6]
             )
             all_sales.append(sal)
-        print(all_sales)
         return all_sales
 
     @classmethod
@@ -225,7 +239,6 @@ class Sales:
                 progress = sale[6]
             )
             my_sales.append(sal)
-        print(my_sales)
         return my_sales
     
     @classmethod #Class method to access a sale by id for salesman changes
@@ -245,7 +258,6 @@ class Sales:
                 last_contact = data[5],
                 progress = data[6]
             )
-        print(my_sale)
         return my_sale
     
     @classmethod
@@ -292,12 +304,19 @@ class Sales:
         ''', (sale_id,))
         connection.commit()
 
+    @classmethod
+    def create_sale(cls, sale_id, client_id, price):
+        new_sale = Sales(sale_id, client_id, price, next_appointment=None, last_contact=None, progress=None)
+        new_sale.save_sale()
+        return new_sale
+
     def __repr__(self):
         return (
-            f"<Salesmen: {self.sales_id}, " +
+            f"[Sale Id: {self.id}, " +
+            f"Salesmen: {self.sales_id}, " +
             f"Client: {self.client_id}, " +
             f"Information: " +
-            f"Price: {self.price}; Last Contact: {self.last_contact}; Next Appointment: {self.next_appointment}; Progress: {self.progress}>"
+            f"Price: {self.price}; Last Contact: {self.last_contact}; Next Appointment: {self.next_appointment}; Progress: {self.progress}]"
         )
 
 if __name__ == "__main__":
