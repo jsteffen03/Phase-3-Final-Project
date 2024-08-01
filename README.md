@@ -43,10 +43,12 @@ Ensure you have the following Installed:
 Setup
 
 Fork and clone this repository:
-    ```
-    git clone https://github.com/your-username/Phase-3-Final-Project
-    cd Phase-3-Final-Project
-    ```
+```
+git clone https://github.com/your-username/Phase-3-Final-Project
+```
+```
+cd Phase-3-Final-Project
+```
 
 Create a virtual environment with pipenv:
     ```
