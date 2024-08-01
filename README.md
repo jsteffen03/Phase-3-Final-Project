@@ -51,33 +51,32 @@ cd Phase-3-Final-Project
 ```
 
 Create a virtual environment with pipenv:
-    ```
-    pipenv install
-    ```
+```
+pipenv install
+```
 cd into the lib/ folder:
-    ```
-    cd lib/
-    ```
+```
+cd lib/
+```
 
 Enter in a virtual environment with pipenv shell:
-    ```
-    pipenv shell
-    ```
+```
+pipenv shell
+```
 
 Run seed.sql file to start database:
 start by entering a sqlite3 terminal:
-    ```
-    sqlite3
-    ```
-    ```
-    .read seed.sql
-    ```
-
+```
+sqlite3
+```
+```
+.read seed.sql
+```
 Exit sqlite3 terminal
 Start the program with python3 cli.py:
-    ```
-    python3 cli.py
-    ```
+```
+python3 cli.py
+```
 
 ## License
 
