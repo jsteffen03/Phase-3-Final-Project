@@ -4,6 +4,8 @@ import sqlite3
 connection = sqlite3.connect("company.db")
 cursor = connection.cursor()
 
+
+# Clients class with necessary properties for class instances
 class Clients:
 
     def __init__(self, name, phone, budget, id=None):
@@ -45,6 +47,7 @@ class Clients:
 
     budget = property(get_budget, set_budget)
 
+# Save instances of client to sql data base
     def save_client(self):
         cursor.execute('''
         INSERT INTO clients(name, phone, budget)
@@ -54,6 +57,7 @@ class Clients:
         all_clients = Clients.get_all()
         self.id = all_clients[-1].id
 
+# class method to get all clients from database
     @classmethod
     def get_all(cls):
         res = cursor.execute("SELECT * FROM clients")
@@ -69,6 +73,7 @@ class Clients:
             all_clients.append(cl)
         return all_clients
     
+# class method to allow to get clients by name
     @classmethod
     def get_by_name(cls, name):
         res = cursor.execute(
@@ -83,7 +88,8 @@ class Clients:
                 budget=data[3]
             )
         return None
-    
+
+#class method to allow user to create a client instance
     @classmethod
     def create_client(cls, name, phone, budget):
         new_client = Clients(name=name, phone=phone, budget=budget)
@@ -96,6 +102,7 @@ class Clients:
             f"Budget: {self.budget}>"
         )
 
+# Salesman class with necessary properties for class instances
 class Salesman:
 
     def __init__(self, name, company_name, id=None):
@@ -103,9 +110,11 @@ class Salesman:
         self.name = name
         self.company_name = company_name
 
+# method to get all sales by the salesman
     def get_sales(self):
         return Sales.get_sales_by_salesman(self.id)
 
+#method to get one sale by its id
     @classmethod
     def get_by_id(cls, id):
         res = cursor.execute("SELECT * FROM salesman WHERE id = ?", (id, ))
@@ -117,6 +126,8 @@ class Salesman:
                 company_name = data[2],
             )
         return None
+    
+# Sales class with necessary properties for class instances
 class Sales:
 
     def __init__(self, sales_id, client_id, price, next_appointment, last_contact, progress, id=None):
@@ -132,7 +143,6 @@ class Sales:
         return self._sales_id
 
     def set_sales_id(self, value):
-        # Assuming this method checks if sales_id exists in the salesman table
         res = cursor.execute("SELECT id FROM salesman WHERE id = ?", (value,))
         if res.fetchone() is None:
             raise ValueError("Not a Salesmen")
@@ -144,7 +154,6 @@ class Sales:
         return self._client_id
 
     def set_client_id(self, value):
-        # Assuming this method checks if client_id exists in the clients table
         res = cursor.execute("SELECT id FROM clients WHERE id = ?", (value,))
         if res.fetchone() is None:
             raise ValueError("Not a Client")
@@ -196,6 +205,7 @@ class Sales:
 
     progress = property(get_progress, set_progress)
 
+# Method to save instances of class to sql database
     def save_sale(self):
         cursor.execute('''
         INSERT INTO sales(sales_id, client_id, price, next_appointment, last_contact, progress)
@@ -205,6 +215,7 @@ class Sales:
         all_sales = Sales.get_all()
         self.id = all_sales[-1].id
 
+# method to get all instances of class from sql database
     @classmethod
     def get_all(cls):
         res = cursor.execute("SELECT * FROM sales")
@@ -223,6 +234,7 @@ class Sales:
             all_sales.append(sal)
         return all_sales
 
+# method ot get all sales by salesman
     @classmethod
     def get_sales_by_salesman(cls, sales_id):
         res = cursor.execute("SELECT * FROM sales WHERE sales_id = ?", (sales_id,))
@@ -259,16 +271,8 @@ class Sales:
                 progress = data[6]
             )
         return my_sale
-    
-    @classmethod
-    def update_next_appointment(cls, sale_id, new_date):
-        cursor.execute('''
-        UPDATE sales
-        SET next_appointment = ?
-        WHERE id = ?;
-        ''', (new_date, sale_id))
-        connection.commit()
-    
+
+#class method to allow salesman to update next appoinment 
     @classmethod
     def update_next_appointment(cls, sale_id, new_date):
         cursor.execute('''
@@ -278,6 +282,7 @@ class Sales:
         ''', (new_date, sale_id))
         connection.commit()
 
+#class method to allow salesman to update last contact 
     @classmethod
     def update_last_contact(cls, sale_id, new_contact):
         cursor.execute('''
@@ -287,6 +292,7 @@ class Sales:
         ''', (new_contact, sale_id))
         connection.commit()
 
+#class method to allow salesman to update progress
     @classmethod
     def update_progress(cls, sale_id, new_progress):
         cursor.execute('''
@@ -296,6 +302,7 @@ class Sales:
         ''', (new_progress, sale_id))
         connection.commit()
 
+# class method to delete sale
     @classmethod
     def delete_sale(cls, sale_id):
         cursor.execute('''
@@ -304,6 +311,7 @@ class Sales:
         ''', (sale_id,))
         connection.commit()
 
+#class method to create sale
     @classmethod
     def create_sale(cls, sale_id, client_id, price):
         new_sale = Sales(sale_id, client_id, price, next_appointment=None, last_contact=None, progress=None)
@@ -319,6 +327,7 @@ class Sales:
             f"Price: {self.price}; Last Contact: {self.last_contact}; Next Appointment: {self.next_appointment}; Progress: {self.progress}]"
         )
 
+#testing code below
 if __name__ == "__main__":
     # print("Testing save_client method")
 

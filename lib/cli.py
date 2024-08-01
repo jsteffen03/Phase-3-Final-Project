@@ -6,6 +6,7 @@ from companies import (
     Salesman
 )
 
+# Start Up CLI commponent
 def main():
     menu()
     choice = input(">")
@@ -20,7 +21,7 @@ def main():
         print("Invalid Choice")
         main()
 
-
+# Sign in Process for Users
 def signinUser():
     name = input("Enter your name: ")
     client = Clients.get_by_name(name)
@@ -41,7 +42,7 @@ def signinUser():
             print("Bye Bye")
             main()
 
-
+# Sign in Process for Salesman
 def signinSales():
     print("1. Trevin - Zebrascapes")
     print("2. Justin - Zebrascapes")
@@ -57,7 +58,7 @@ def signinSales():
         signinSales()
 
         
-
+# ClI commponent for CLient Menu allowing CLient to do the following
 def clientMenu(client):
     print(f"Welcom to your page, {client.name}")
     print("What would you like to do? ")
@@ -84,6 +85,8 @@ Salesmen:
     else:
         print("invalid choice")
 
+
+# CLI commponents to run the salesmenu allowing salesmen to do the following
 def Salesmenu(salesman):
     print("What would you like to do? ")
     print("1. View all sales")
@@ -135,8 +138,8 @@ def Salesmenu(salesman):
         print("Invalid Input")
         Salesmenu(salesman)
 
-
-def menu():
+# starting point for program
+def menu(): 
     print("Please select an option:")
     print("1. Sign in as Client")
     print("2. Sign in as Salesman")
