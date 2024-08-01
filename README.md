@@ -43,38 +43,41 @@ Ensure you have the following Installed:
 Setup
 
 Fork and clone this repository:
-    ```bash
-    git clone https://github.com/your-username/Phase-3-Final-Project
-    cd Phase-3-Final-Project
-    ```
+```
+git clone https://github.com/your-username/Phase-3-Final-Project
+```
+```
+cd Phase-3-Final-Project
+```
 
 Create a virtual environment with pipenv:
-    ```bash
-    pipenv install
-    ```
+```
+pipenv install
+```
 cd into the lib/ folder:
-    ```bash
-    cd lib/
-    ```
+```
+cd lib/
+```
 
-Enter in a virtual environment with pipenv shell
-    ```bash
-    pipenv shell
-    ```
+Enter in a virtual environment with pipenv shell:
+```
+pipenv shell
+```
 
 Run seed.sql file to start database:
-start by entering a sqlite3 terminal
-    ```bash
-    sqlite3
-    .read seed.sql
-    ```
-
-Start the program with python3 cli.py
-    ```bash
-    python3 cli.py
-    ```
+start by entering a sqlite3 terminal:
+```
+sqlite3
+```
+```
+.read seed.sql
+```
+Exit sqlite3 terminal
+Start the program with python3 cli.py:
+```
+python3 cli.py
+```
 
 ## License
 
 Open Source Program
-
