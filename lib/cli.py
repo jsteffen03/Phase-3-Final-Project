@@ -126,7 +126,7 @@ def Salesmenu(salesman):
                 Salesmenu(salesman)
             elif choice == "5":
                 main()
-            else:
+            else: 
                 print("Invalid choice")
                 Salesmenu(salesman)
     elif choice == "3":
